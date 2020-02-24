@@ -1,13 +1,36 @@
-#include <iostream>  
-#include <algorithm>  
-using namespace std;  
-int main()  
-{  
-    int num[3]={2,1,3};  
-    do  
-    {  
-        cout<<num[0]<<" "<<num[1]<<" "<<num[2]<<endl;  
-    }while(next_permutation(num,num+3));  
-    return 0;  
+#include<bits/stdc++.h>
+#include<cstdio>
+using namespace std;
+struct apple{
+	int a,b;
+}ap[50005];
+int cmp(apple x,apple y){
+	return x.b<y.b;
 }
-
+int cnt=0;
+int main()
+{
+	int geshu,liqi,denggao,shougao,ans=0;
+	cin>>geshu>>liqi>>denggao>>shougao;
+	for(int i=1;i<=geshu;i++)
+	{
+		int a,b,n=0,m=0;
+		cin>>a>>b;
+		if(a<=(denggao+shougao)){
+			cnt++;
+			ap[cnt].a=a;ap[cnt].b=b;
+		}
+	}
+	sort(ap+1,ap+cnt+1,cmp);//按照苹果b的大小，从小到大排序 
+	for(int i=1;i<=cnt;i++){
+		if(liqi>=ap[i].b){
+			ans++;
+			liqi=liqi-ap[i].b;
+		} 
+		else
+		    break;
+		
+	} 
+	cout<<ans;
+	return 0;
+}
