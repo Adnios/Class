@@ -63,7 +63,6 @@ int main(){
 ```
 
 ```c++
-
 #include <bits/stdc++.h>
 using namespace std;
 const int maxn=110;
@@ -103,6 +102,69 @@ int main(){
             ans=sum;
     }
     cout<<ans;
+}
+```
+
+# 中序遍历,前序，后序，高度，节点个数
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+const int maxn=110;
+int n,ans=0x3f3f3f3f,vis[maxn];
+struct node{
+    int left,right,father,value;
+}t[maxn];
+void inOrder(int x){//中序 LVR
+    if(x!=0){
+        inOrder(t[x].left);
+        cout<<x;
+        inOrder(t[x].right);
+    }
+}
+void PreOrder(int x){//前序 VLR
+    if(x!=0){
+        cout<<x;
+        PreOrder(t[x].left);
+        PreOrder(t[x].right);
+    }
+}
+void PostOrder(int x){//后序 LRV
+    if(x!=0){
+        PostOrder(t[x].left);
+        PostOrder(t[x].right);
+        cout<<x;
+    }
+}
+int depth(int x){//高度
+    if(x==0)
+        return 0;
+    else 
+        return 1+max(depth(t[x].left),depth(t[x].right));
+}
+int Size(int x){//节点个数
+    if(x==0)
+        return 0;
+    else
+        return 1+Size(t[x].left)+Size(t[x].right);
+}
+int main(){
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        cin>>t[i].value>>t[i].left>>t[i].right;
+    }
+    for(int i=1;i<=n;i++){
+        t[t[i].left].father=i;
+        t[t[i].right].father=i;
+    }
+    inOrder(1);
+    cout<<endl;
+    PreOrder(1);
+    cout<<endl;
+    PostOrder(1);
+    cout<<endl;
+    cout<<depth(1)<<endl;
+    cout<<Size(1)<<endl;
 }
 ```
 
