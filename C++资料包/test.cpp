@@ -1,28 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int maxx=1000;
-int n,m,ans;
-vector<int> graph[maxx];
-int visit[maxx];
-void dfs(int x){
-    ans=max(ans,x);
-    visit[x]=1;
-    for(int i=0;i<graph[x].size();i++){
-        if(visit[graph[x][i]]==0)
-            dfs(graph[x][i]);
-    }
-}
+int n,k;
+vector<int> v;
 int main(){
-    cin>>n>>m;
-    for(int i=1;i<=m;i++){
-        int x,y;
-        cin>>x>>y;
-        graph[x].push_back(y);
-    }
+    cin>>n>>k;
+    int a[n+5];
     for(int i=1;i<=n;i++){
-        ans=0;
-        memset(visit,0,sizeof(visit));
-        dfs(i);
-        cout<<ans<<" ";
+        cin>>a[i];
     }
+    for(int i=1;i<=n-k+1;i++){
+        int temp[n+5];
+        int s1=0;
+        for(int k=1;k<=n;k++){
+            temp[k]=a[k];
+        }
+        sort(temp+i,temp+i+k);
+        for(int j=1;j<=n;j++){
+            s1=s1*10+temp[j];
+        }
+        v.push_back(s1);
+    }
+    int ans=1;
+    sort(v.begin(),v.end());
+    for(int i=1;i<v.size();i++){
+        if(v[i]!=v[i-1])
+            ans++;
+    }
+    cout<<ans;
 }
