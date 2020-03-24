@@ -1,30 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
+string s;
 int n,k;
-vector<int> v;
+int sum=0;
+stack<char> st;
+void n_10(){
+    for(int i=0;i<s.size();i++){
+        int e=pow(n,s.size()-i-1);
+        if(s[i]<'A'){
+            e*=(s[i]-'0');
+            sum+=e;
+        }
+        else{
+            e*=(s[i]-'A'+10);
+            sum+=e;
+        }
+    }
+}
+void ten_k(){
+    while(sum){
+        int temp=sum%k;
+        char t;
+        if(temp<10)
+            t='0'+temp;
+        else
+            t='A'+(temp-10);
+        st.push(t);
+        sum/=k;
+    }
+    while(!st.empty()){
+        cout<<st.top();
+        st.pop();
+    }
+}
 int main(){
-    cin>>n>>k;
-    int a[n+5];
-    for(int i=1;i<=n;i++){
-        cin>>a[i];
-    }
-    for(int i=1;i<=n-k+1;i++){
-        int temp[n+5];
-        int s1=0;
-        for(int k=1;k<=n;k++){
-            temp[k]=a[k];
-        }
-        sort(temp+i,temp+i+k);
-        for(int j=1;j<=n;j++){
-            s1=s1*10+temp[j];
-        }
-        v.push_back(s1);
-    }
-    int ans=1;
-    sort(v.begin(),v.end());
-    for(int i=1;i<v.size();i++){
-        if(v[i]!=v[i-1])
-            ans++;
-    }
-    cout<<ans;
+    cin>>n>>s>>k;
+    n_10();
+    /* cout<<sum<<endl; */
+    ten_k();
 }
