@@ -125,5 +125,60 @@ int main(){
     cout<<res;
 }
 ```
+# P1044 栈
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    long long a[20]={1};
+    int n;
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<i;j++){
+            a[i]+=a[j]*a[i-1-j];
+        }
+    }
+    cout<<a[n];
+}
 
-<++>
+```
+# P1744 矩阵II
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+int n;
+int main(){
+    int a[1000]={1};
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<i;j++){
+            a[i]+=a[j]*a[i-1-j];
+            a[i]%=100;
+        }
+    }
+    cout<<a[n]%100;
+}
+
+```
+# P1976 鸡蛋饼
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+int n;
+const long long mod = 100000007;
+long long a[3333];//用int会有错误
+int main(){
+    cin>>n;
+    a[0]=1;
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<i;j++){
+            a[i]+=a[j]*a[i-1-j];
+            a[i]%=mod;
+        }
+    }
+    cout<<a[n]%mod;
+}
+
+
+```
+
