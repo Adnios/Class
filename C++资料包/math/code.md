@@ -287,4 +287,47 @@ int main(){
 
 }
 ```
+# P2196 挖地雷 #
+![题解](./pic/P2196.png)
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+int n,a[30],p[30],g[30][30],f[30];
+int maxx,maxi;
+void dg(int x){
+    if(x==0)
+        return ;
+    dg(p[x]);
+    cout<<x<<" ";
+}
+int main(){
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
+        f[i]=a[i];
+    }
+    for(int i=1;i<n;i++){
+        for(int j=i+1;j<=n;j++){
+            cin>>g[i][j];
+        }
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<i;j++){
+            if(g[j][i]==1){
+                if(f[i]<f[j]+a[i]){
+                    p[i]=j;
+                    f[i]=f[j]+a[i];
+                }
+            }
+        }
+        if(maxx<f[i]){
+            maxx=f[i];
+            maxi=i;
+        }
+    }
+    dg(maxi);
+    cout<<endl<<maxx<<endl;
+}
+
+```
 
