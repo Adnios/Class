@@ -330,4 +330,40 @@ int main(){
 }
 
 ```
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+int n,a[30],g[30][30];
+int maxx,m;
+void dfs(int x,int sum,int p){
+    if(maxx<sum){
+        maxx=sum;
+        m=p;
+    }
+    for(int i=1;i<=n;i++){
+        if(x==0||g[x][i]==1){
+            dfs(i,sum+a[i],p+(1<<(i-1)));
+        }
+    }
+}
+int main(){
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
+    }
+    for(int i=1;i<n;i++){
+        for(int j=i+1;j<=n;j++){
+            cin>>g[i][j];
+        }
+    }
+    dfs(0,0,0);
+    for(int i=1;i<=n;i++){
+        if(m%2==1)
+            cout<<i<<" ";
+        m/=2;
+    }
+    cout<<endl<<maxx<<endl;
+}
+
+```
 
