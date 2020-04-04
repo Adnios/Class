@@ -366,4 +366,66 @@ int main(){
 }
 
 ```
+# P1802 5倍经验日 #
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+int n,x,win[1010],lose[1010],use[1010];
+long long f[1010];
+int main(){
+    cin>>n>>x;
+    for(int i=1;i<=n;i++){
+        cin>>lose[i]>>win[i]>>use[i];
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=x;j>=0;j--){
+            if(j>=use[i]){
+                f[j]=max(f[j]+lose[i],f[j-use[i]]+win[i]);
+            }
+            else{
+                f[j]=f[j]+lose[i];
+            }
+        }
+    }
+    cout<<f[x]*5;
+}
+
+```
+# P1048 采药 #
+裸的背包
+```c++
+#include <iostream>
+using namespace std;
+int m,t,c[105],v[105],dp[1005];
+int main(){
+     cin>>t>>m;
+     for(int i=1;i<=m;i++){
+         cin>>c[i]>>v[i];
+     }
+     for(int i=1;i<=m;i++){
+         for(int j=t;j>=c[i];j--){
+             dp[j]=max(dp[j],dp[j-c[i]]+v[i]);
+         }
+     }
+     cout<<dp[t];
+}
+
+```
+
+```c++
+#include <iostream>
+using namespace std;
+int m,t,c,v,dp[1005];
+int main(){
+     cin>>t>>m;
+     for(int i=1;i<=m;i++){
+         cin>>c>>v;
+         for(int j=t;j>=c;j--){
+             dp[j]=max(dp[j],dp[j-c]+v);
+         }
+     }
+     cout<<dp[t];
+}
+
+```
 
