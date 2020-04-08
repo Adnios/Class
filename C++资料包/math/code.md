@@ -429,3 +429,96 @@ int main(){
 
 ```
 
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+const int dong_bao_cheng=1100,dongbaocheng=110;
+int dong;
+int bao;
+int cheng[dongbaocheng],ch[dongbaocheng];
+int cheng2[dong_bao_cheng][dongbaocheng];
+int main()
+{
+    scanf("%d %d",&dong,&bao);
+    for(int i=1;i<=bao;++i)
+        scanf("%d %d",&cheng[i],&ch[i]);
+    for(int i=1;i<=bao;++i)
+    {
+        for(int v=dong;v>=0;--v)
+        {
+            if(cheng[i]<=v)
+                cheng2[i][v]=max(cheng2[i-1][v],cheng2[i-1][v-cheng[i]]+ch[i]);
+            else
+                cheng2[i][v]=cheng2[i-1][v];  
+        }  	
+    }
+    printf("%d\n",cheng2[bao][dong]);  
+    return 0;
+}
+```
+
+# P1060 开心的金明
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+int n,m,v[30],p[30],dp[30005];
+
+int main(){
+    cin>>n>>m;
+    for(int i=1;i<=m;i++){
+        cin>>v[i]>>p[i];
+        p[i]*=v[i];
+    }
+    for(int i=1;i<=m;i++){
+        for(int j=n;j>=v[i];j--){
+            dp[j]=max(dp[j],dp[j-v[i]]+p[i]);
+        }
+    }
+    cout<<dp[n];
+}
+```
+
+# P1049 装箱问题
+物体的价值和体积一样
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+int n,m,v[30],p[30],dp[30005];
+
+int main(){
+    cin>>n>>m;
+    for(int i=1;i<=m;i++){
+        cin>>v[i];
+    }
+    for(int i=1;i<=m;i++){
+        for(int j=n;j>=v[i];j--){
+            dp[j]=max(dp[j],dp[j-v[i]]+v[i]);
+        }
+    }
+    cout<<n-dp[n];
+}
+```
+
+# P1164 小A点菜
+> dp[n],当有n元钱是，正好花完的方案数
+
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+int n,m,v[30005],dp[30005];
+
+int main(){
+    cin>>n>>m;
+    dp[0]=1;
+    for(int i=1;i<=n;i++){
+        cin>>v[i];
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=m;j>=v[i];j--){
+            dp[j]=dp[j]+dp[j-v[i]];
+        }
+    }
+    cout<<dp[m];
+}
+```
+
