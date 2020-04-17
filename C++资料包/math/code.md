@@ -1,5 +1,5 @@
 # freopen
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 int main(){
@@ -13,7 +13,7 @@ int main(){
 ```
 
 # P1143
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 string s;
@@ -59,7 +59,7 @@ int main(){
 ```
 
 # P1100 高地位转换
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 int main(){
@@ -70,8 +70,8 @@ int main(){
 
 ```
 
-# P1029 最大公约数和最小公倍数问题 
-```c++
+# P1029 最大公约数和最小公倍数问题
+```cpp
 #include<bits/stdc++.h>
 using namespace std;
 int m,n,ans;
@@ -92,7 +92,7 @@ int main(){
     }
 ```
 # P1866 编号
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 int main(){
@@ -112,7 +112,7 @@ int main(){
 
 ```
 # P5520 [yLOI2019] 青原樱
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 long long n,m,mod,res=1;
@@ -126,7 +126,7 @@ int main(){
 }
 ```
 # P1044 栈
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 int main(){
@@ -143,7 +143,7 @@ int main(){
 
 ```
 # P1744 矩阵II
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 int n;
@@ -161,7 +161,7 @@ int main(){
 
 ```
 # P1976 鸡蛋饼
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 int n;
@@ -183,7 +183,7 @@ int main(){
 ```
 
 # P3390 【模板】矩阵快速幂
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
@@ -235,7 +235,7 @@ int main(){
 ```
 
 # P1963 #
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
@@ -289,7 +289,7 @@ int main(){
 ```
 # P2196 挖地雷 #
 ![题解](./pic/P2196.png)
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 int n,a[30],p[30],g[30][30],f[30];
@@ -330,7 +330,7 @@ int main(){
 }
 
 ```
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 int n,a[30],g[30][30];
@@ -367,7 +367,7 @@ int main(){
 
 ```
 # P1802 5倍经验日 #
-```c++
+```cpp
 #include <bits/stdc++.h>
 using namespace std;
 int n,x,win[1010],lose[1010],use[1010];
@@ -391,9 +391,9 @@ int main(){
 }
 
 ```
-# P1048 采药 #
+# P1048 采药
 裸的背包
-```c++
+```cpp
 #include <iostream>
 using namespace std;
 int m,t,c[105],v[105],dp[1005];
@@ -412,7 +412,7 @@ int main(){
 
 ```
 
-```c++
+```cpp
 #include <iostream>
 using namespace std;
 int m,t,c,v,dp[1005];
@@ -429,7 +429,7 @@ int main(){
 
 ```
 
-```c++
+```cpp
 #include<bits/stdc++.h>
 using namespace std;
 const int dong_bao_cheng=1100,dongbaocheng=110;
@@ -449,16 +449,17 @@ int main()
             if(cheng[i]<=v)
                 cheng2[i][v]=max(cheng2[i-1][v],cheng2[i-1][v-cheng[i]]+ch[i]);
             else
-                cheng2[i][v]=cheng2[i-1][v];  
-        }  	
+                cheng2[i][v]=cheng2[i-1][v];
+        }
     }
-    printf("%d\n",cheng2[bao][dong]);  
+    printf("%d\n",cheng2[bao][dong]);
     return 0;
 }
 ```
 
 # P1060 开心的金明
-```c++
+
+```cpp
 #include<bits/stdc++.h>
 using namespace std;
 int n,m,v[30],p[30],dp[30005];
@@ -479,8 +480,10 @@ int main(){
 ```
 
 # P1049 装箱问题
+
 物体的价值和体积一样
-```c++
+
+```cpp
 #include<bits/stdc++.h>
 using namespace std;
 int n,m,v[30],p[30],dp[30005];
@@ -500,9 +503,10 @@ int main(){
 ```
 
 # P1164 小A点菜
+
 > dp[n],当有n元钱是，正好花完的方案数
 
-```c++
+```cpp
 #include<bits/stdc++.h>
 using namespace std;
 int n,m,v[30005],dp[30005];
@@ -521,4 +525,3 @@ int main(){
     cout<<dp[m];
 }
 ```
-

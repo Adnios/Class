@@ -1,45 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n,m,a[5005],ans;
-bool dfs(int x,int sum,int a[]){
-    if(sum==n){
-        for(int i=1;i<=n-2;i++){
-            for(int j=i+1;j<=n-1;j++){
-                for(int k=j+1;k<=n;k++){
-                    if(a[i]+a[j]<=a[k]){
-                        return false;
-                    }
-                }
-            }
-        }
-        for(int i=1;i<=n;i++){
-            cout<<a[i]<<" ";
-        }
-        cout<<endl;
-        ans++;
-        ans%=m;
-        return true;
-    }
-    for(int i=x;i<=n;i++){
-        a[sum+1]=i;
-        if(dfs(i,sum+1,a)==false)
-            break;
-    }
-    return true;
+int n,t;
+double s;
+struct Node{
+    int m,v;
+}a[110];
+bool cmp(Node x,Node y){
+    return x.v*y.m>y.v*x.m;
 }
 int main(){
-    cin>>n>>m;
-    if(n==1){
-        cout<<1;
+    cin>>n>>t;
+    for(int i=1;i<=n;i++){
+        cin>>a[i].m>>a[i].v;
     }
-    else if(n==2){
-        cout<<3;
-    }
-    else{
-        for(int i=1;i<=n;i++){
-            a[1]=i;
-            dfs(i,1,a);
+    sort(a+1,a+n+1,cmp);
+    for(int i=1;i<=n;i++){
+        if(t>=a[i].m){
+            s+=a[i].v;
+            t-=a[i].m;
         }
-        cout<<ans%m;
+        else{
+            s+=1.0*t*a[i].v/a[i].m;
+            break;
+        }
     }
+    printf("%.2lf",s);
 }
