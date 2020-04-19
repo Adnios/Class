@@ -30,6 +30,8 @@ int main(){
 
 # P3366 最小生成树
 
+kruskal
+
 ```c++
 #include <bits/stdc++.h>
 using namespace std;
@@ -72,6 +74,120 @@ int main(){
     sort(a+1,a+m+1,cmp);
     kruskal();
     cout<<ans;
+}
+```
+
+prim
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+const int maxx=99999;
+int n,m,sum,g[100][100],vis[100],dis[100];
+
+int main(){
+    cin>>n>>m;
+    
+    for(int i=1;i<=n;i++){
+    	for(int j=1;j<=n;j++){
+    		if(i==j)
+    			g[i][j]=0;
+    		else
+    			g[i][j]=maxx;
+		}
+	}
+    for(int i=1;i<=m;i++){
+        int x,y,z;
+        cin>>x>>y>>z;
+        g[x][y]=z;
+        g[y][x]=z;
+    }
+    for(int i=1;i<=n;i++)
+        dis[i]=g[1][i];
+    vis[1]=1;
+
+    for(int i=1;i<=n-1;i++){
+        int minn=maxx,minIndex;
+        //寻找最近的点
+        for(int j=1;j<=n;j++){
+            if(vis[j]==0&&dis[j]<minn){
+                minn=dis[j];
+                minIndex=j;
+            }
+        }
+        vis[minIndex]=1;
+        sum+=dis[minIndex];
+        for(int j=1;j<=n;j++){
+            if(vis[j]==0&&g[minIndex][j]<dis[j]){
+                dis[j]=g[minIndex][j];
+            }
+        }
+    }
+    cout<<sum;
+}
+```
+
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+#define inf 123456789
+const int maxn=5005;
+const int maxm=200005;
+struct edge{
+    int next,to,dis;
+}e[maxm<<1];
+int head[maxn],dis[maxn],cnt,n,m,tot,now=1,ans;
+//已经加入最小生成树的的点到没有加入的点的最短距离，比如说1和2号节点已经加入了最小生成树，那么dis[3]就等于min(1->3,2->3)
+bool vis[maxn];
+void add(int from,int to,int dis){
+    e[++cnt].next=head[from];
+    e[cnt].to=to;
+    e[cnt].dis=dis;
+    head[from]=cnt;
+}
+
+void prim(){
+    //先把dis数组附为极大值
+    for(int i=2;i<=n;++i){
+        dis[i]=inf;
+    }
+    //这里要注意重边，所以要用到min
+    for(int i=head[1];i;i=e[i].next){
+        dis[e[i].to]=min(dis[e[i].to],e[i].dis);
+    }
+    while(++tot<n){//最小生成树边数等于点数-1
+        int minn=inf;//把minn置为极大值
+        vis[now]=1;//标记点已经走过
+        //枚举每一个没有使用的点
+        //找出最小值作为新边
+        //注意这里不是枚举now点的所有连边，而是1~n
+        for(int i=1;i<=n;++i){
+            if(!vis[i]&&minn>dis[i]){
+                minn=dis[i];
+                now=i;
+            }
+        }
+        ans+=minn;
+        //枚举now的所有连边，更新dis数组
+        for(int i=head[now];i;i=e[i].next){
+            int to=e[i].to;
+            if(dis[to]>e[i].dis&&!vis[to]){
+                dis[to]=e[i].dis;
+            }
+        }
+    }
+    cout<<ans;
+}
+int main(){
+    cin>>n>>m;
+    for(int i=1;i<=m;i++){
+    	int x,y,z;
+    	cin>>x>>y>>z;
+    	add(x,y,z);
+    	add(y,x,z);
+	}
+	prim();
+    return 0;
 }
 ```
 
