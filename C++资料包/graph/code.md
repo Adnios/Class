@@ -366,3 +366,44 @@ int main(){
 }
 ```
 
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+long long A,B,a,N,ans,G[505][505],w[505],k,sum;
+bool pd[505];
+int main(){
+    cin>>A>>B;
+    for(int i=1;i<=B;i++){
+        for(int j=1;j<=B;j++){
+            cin>>G[i][j];
+            if(G[i][j]==0)G[i][j]=A;
+            if(G[i][j]>A)G[i][j]=A;
+        }
+    }
+    for(int i=1;i<=B;i++){
+        w[i]=G[1][i];
+    }
+    k=1;
+    pd[1]=true;
+    sum=2;
+    while(sum<=B){
+        long long mmin=1e9;
+        for(int i=2;i<=B;i++){
+            if(pd[i]==false&&mmin>w[i]){
+                mmin=w[i];
+                k=i;
+            }
+        }
+        /* if(mmin==1e9)break; */
+        ans+=mmin;
+        pd[k]=true;
+        for(int i=2;i<=B;i++){
+            if(pd[i]==false&&w[i]>G[i][k])w[i]=G[i][k];
+        }
+        sum++;
+    }
+    cout<<ans+A<<endl;
+    return 0;
+}
+```
+
