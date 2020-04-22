@@ -191,3 +191,178 @@ int main(){
 }
 ```
 
+# P1195 口袋的天空
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+int n,m,k,ans,tot,f[100000];
+struct edge{
+    int start,to,val;
+}a[2000005];
+bool cmp(edge a,edge b){
+    return a.val<b.val;
+}
+int findfather(int x){
+    if(f[x]==x)
+        return x;
+    else{
+        f[x]=findfather(f[x]);
+        return f[x];
+    }
+}
+void kruskal(){
+    for(int i=1;i<=m;i++){
+        int u=findfather(a[i].start);
+        int v=findfather(a[i].to);
+        if(u==v)
+            continue;
+        else{
+            ans+=a[i].val;
+            f[u]=v;
+            tot++;
+            if(tot==n-k)
+                break;
+        }
+    }
+}
+int main(){
+    cin>>n>>m>>k;
+    for(int i=1;i<=n;i++)
+        f[i]=i;
+    for(int i=1;i<=m;i++)
+        cin>>a[i].start>>a[i].to>>a[i].val;
+    sort(a+1,a+m+1,cmp);
+    kruskal();
+    cout<<ans;
+}
+```
+
+用prim有一个测试用例过不了
+
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+#define inf 123456789
+const int maxn=5005;
+const int maxm=200005;
+struct edge{
+    int next,to,dis;
+}e[maxm<<1];
+int head[maxn],dis[maxn],cnt,n,m,k,tot,now,ans,temp=inf;
+//已经加入最小生成树的的点到没有加入的点的最短距离，比如说1和2号节点已经加入了最小生成树，那么dis[3]就等于min(1->3,2->3)
+bool vis[maxn];
+void add(int from,int to,int dis){
+    e[++cnt].next=head[from];
+    e[cnt].to=to;
+    e[cnt].dis=dis;
+    head[from]=cnt;
+}
+
+void prim(){
+    //先把dis数组附为极大值
+    for(int i=2;i<=n;++i){
+        dis[i]=inf;
+    }
+    //这里要注意重边，所以要用到min
+    for(int i=head[now];i;i=e[i].next){
+        dis[e[i].to]=min(dis[e[i].to],e[i].dis);
+    }
+    while(++tot<n-k+1){//最小生成树边数等于点数-1
+        int minn=inf;//把minn置为极大值
+        vis[now]=1;//标记点已经走过
+        //枚举每一个没有使用的点
+        //找出最小值作为新边
+        //注意这里不是枚举now点的所有连边，而是1~n
+        for(int i=1;i<=n;++i){
+            if(!vis[i]&&minn>dis[i]){
+                minn=dis[i];
+                now=i;
+            }
+        }
+        ans+=minn;
+        //枚举now的所有连边，更新dis数组
+        for(int i=head[now];i;i=e[i].next){
+            int to=e[i].to;
+            if(dis[to]>e[i].dis&&!vis[to]){
+                dis[to]=e[i].dis;
+            }
+        }
+    }
+    cout<<ans;
+}
+int main(){
+    cin>>n>>m>>k;
+    for(int i=1;i<=m;i++){
+    	int x,y,z;
+    	cin>>x>>y>>z;
+        if(temp>z){
+            temp=z;
+            now=x;
+        }
+    	add(x,y,z);
+    	add(y,x,z);
+	}
+    cout<<now<<endl;
+    now=1;
+	prim();
+    return 0;
+}
+```
+
+# P1194 买礼物
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+int A,B,cnt,ans,tot,f[100000];
+struct edge{
+    int start,to,val;
+}a[2000005];
+bool cmp(edge a,edge b){
+    return a.val<b.val;
+}
+int findfather(int x){
+    if(f[x]==x)
+        return x;
+    else{
+        f[x]=findfather(f[x]);
+        return f[x];
+    }
+}
+void kruskal(){
+    for(int i=1;i<=cnt;i++){
+        int u=findfather(a[i].start);
+        int v=findfather(a[i].to);
+        if(u==v)
+            continue;
+        else{
+            ans+=a[i].val;
+            f[u]=v;
+            tot++;
+            if(tot==B-1)
+                break;
+        }
+    }
+}
+int main(){
+    cin>>A>>B;
+    for(int i=1;i<=B;i++)
+        f[i]=i;
+    for(int i=1;i<=B;i++)
+        for(int j=1;j<=B;j++){
+            int temp;
+            cin>>temp;
+            a[++cnt].start=i;
+            a[cnt].to=j;
+            if(temp==0)
+                a[cnt].val=1234567;
+            else
+                a[cnt].val=temp;
+        }
+    sort(a+1,a+cnt+1,cmp);
+    kruskal();
+    cout<<min(ans+A,A*B);
+}
+```
+
