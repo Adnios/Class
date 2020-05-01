@@ -1,6 +1,29 @@
-# NOI Online入门组
+# 第2轮 NOI Online入门组
 
 ## 第一题：未了(endless)
+
+### 知识点
+
+lower_bound 和upper_bound需要用在一个有序数组和容器中。
+
+- lower_bound (first,last,val)用来寻找在数组和容器[first,last)的范围内，第一个值**大于等于**val的元素的位置。如果是数组，则返回该位置的指针，如果是容器，则返回该位置的迭代器。
+- upper_bound(first,last,val)用来寻找在数组和容器[first,last)的范围内，第一个值**大于**val的元素的位置。如果是数组，则返回该位置的指针，如果是容器，则返回该位置的迭代器。
+- 演示代码
+
+```c++
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int main(){
+	int a[10]={1,2,2,3,3,3,5,5,5,5};
+	//寻找3
+	cout<<lower_bound(a,a+10,3)-a<<","<<upper_bound(a,a+10,3)-a<<endl;
+	return 0;
+} 
+```
+
+
+### code
 
 ```c++
 #include <bits/stdc++.h>
@@ -40,6 +63,8 @@ int main(){
 
 ## 荆轲刺秦王 
 
+### 知识点
+
 - 差分
     - 数组元素中，每两项之间的差（特别的，差分数组的第一项原数组的第一项自己)
 
@@ -51,20 +76,22 @@ int main(){
 
     - ![差分](./pic/差分.png "opt title")
     - ![士兵差分](./pic/差分.png "opt title")
+    - 差分的前缀和就是它本身
 
 
 [reference](https://www.luogu.com.cn/blog/ravenclawyangrunze/solution-at2442)
 
+### code
 
 ```c++
 #include<iostream>
 #include<cstdio>
 #include<queue>
 using namespace std;
-struct qwq{//qwq结构体
+struct node{//node结构体
     int x,y,yx,sy,s;
 };
-qwq minq(qwq a,qwq b){//找最优解
+node minq(node a,node b){//找最优解
     if(a.s!=b.s)return a.s<b.s?a:b;
     if(a.yx+a.sy!=b.yx+b.sy)return a.yx+a.sy<b.yx+b.sy?a:b;
     return a.yx<b.yx?a:b;
@@ -83,61 +110,61 @@ void lookaround(int x,int y,int k){//处理看到的范围（差分数组tag）
     }
 }
 int sx,sy,ex,ey;
-queue <qwq> q;//队列
-qwq ans=(qwq){0,0,233333333,233333333,233333333};
+queue <node> q;//队列
+node ans=(node){0,0,233333333,233333333,233333333};
 void bfs(){//广搜
     while(!q.empty()){
-        qwq fro=q.front();
+        node fro=q.front();
         q.pop();
-        if(fro.s>ans.s)continue;
-        if(fro.x==ex&&fro.y==ey){
+        if(fro.s>ans.s)continue;//最优性剪纸
+        if(fro.x==ex&&fro.y==ey){//找到最优解后
             ans=minq(ans,fro);
             continue;
         } 
-        for(int i=0;i<8;i++){
+        for(int i=0;i<8;i++){//不瞬移,8个方向
             int nx=fro.x+dx[i];
             int ny=fro.y+dy[i];
             if(nx<1||nx>n||ny<1||ny>m||map[nx][ny]>0)continue;
             if(look[nx][ny]){
+                //隐身
                 if(vis[nx][ny][fro.yx+1][fro.sy]||fro.yx+1>c1)continue;
                 vis[nx][ny][fro.yx+1][fro.sy]=1;
-                q.push((qwq){nx,ny,fro.yx+1,fro.sy,fro.s+1});
+                q.push((node){nx,ny,fro.yx+1,fro.sy,fro.s+1});
             }
             else{
                 if(vis[nx][ny][fro.yx][fro.sy])continue;
                 vis[nx][ny][fro.yx][fro.sy]=1;
-                q.push((qwq){nx,ny,fro.yx,fro.sy,fro.s+1});             
+                q.push((node){nx,ny,fro.yx,fro.sy,fro.s+1});             
             }
         }
         if(fro.sy+1>c2)continue;
-        for(int i=0;i<4;i++){
+        for(int i=0;i<4;i++){//4个方向瞬移
             int nx=fro.x+dx[i]*d;
             int ny=fro.y+dy[i]*d;
             if(nx<1||nx>n||ny<1||ny>m||map[nx][ny]>0)continue;
             if(look[nx][ny]){
                 if(vis[nx][ny][fro.yx+1][fro.sy+1]||fro.yx+1>c1)continue;
                 vis[nx][ny][fro.yx+1][fro.sy+1]=1;
-                q.push((qwq){nx,ny,fro.yx+1,fro.sy+1,fro.s+1});
+                q.push((node){nx,ny,fro.yx+1,fro.sy+1,fro.s+1});
             }
             else{
                 if(vis[nx][ny][fro.yx][fro.sy+1])continue;
                 vis[nx][ny][fro.yx][fro.sy+1]=1;
-                q.push((qwq){nx,ny,fro.yx,fro.sy+1,fro.s+1});               
+                q.push((node){nx,ny,fro.yx,fro.sy+1,fro.s+1});               
             }           
         }
     }
 }
-int main(){//main函数
-    ios::sync_with_stdio(false);
+int main(){
     cin>>n>>m>>c1>>c2>>d;
-    for(int i=1;i<=n;i++){//输入+处理
+    for(int i=1;i<=n;i++){
         for(int j=1;j<=m;j++){
             string s;
             cin>>s;
             if(s[0]=='S'){
                 sx=i,sy=j;
                 map[i][j]=-1;
-                q.push((qwq){sx,sy,0,0,0});
+                q.push((node){sx,sy,0,0,0});
                 vis[i][j][0][0]=1;
             }
             else if(s[0]=='T'){
@@ -148,7 +175,7 @@ int main(){//main函数
             else{
                 int x=0;
                 for(int i=0;i<s.size();i++)
-                x=(x<<1)+(x<<3)+(s[i]^'0');
+                    x=x*10+s[i]-'0';
                 map[i][j]=x;
                 lookaround(i,j,x-1);
             }
@@ -158,9 +185,9 @@ int main(){//main函数
         int sum=0;
         for(int j=1;j<=m;j++){
             sum+=tag[i][j]; //求出look数组（前缀和）
-            if(sum>0)look[i][j]=1;
+            if(sum>0)look[i][j]=1;  
         }
-    }
+    }   
     bfs();//广搜
     if(ans.s==233333333)printf("-1");
     else printf("%d %d %d",ans.s,ans.yx,ans.sy);//最后输出
@@ -171,6 +198,7 @@ int main(){//main函数
 
 ## 建设城市
 
+### 知识点
 
 P3811 [模板] 乘法逆元
 
@@ -245,6 +273,7 @@ for(long long i=2;i<=n;i++) //线性递推
 - 分成的组,每组元素不为空
 - 10个相同的球放入3个不同的盒子,每个盒子至少一个,将9个板插入十个球,选择两个板子
 
+### code
 
 ```c++
 #include<bits/stdc++.h>
@@ -337,5 +366,86 @@ int main(){
 https://zhuanlan.zhihu.com/p/111760454
 https://studyingfather.blog.luogu.org/pentagonal-number-and-number-partitions
 */
+```
+
+## 魔法
+
+### 知识点
+
+- 动态规划
+
+- 矩阵乘法
+
+
+### code
+
+```c++
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+struct edge
+{
+ int u,v,w;
+}e[2505];
+int n,m,k;
+struct mat
+{
+ long long a[105][105];
+ mat(int x=63)
+ {
+  memset(a,x,sizeof(a));
+ }
+ mat operator*(const mat&b)const
+ {
+  mat ans;
+  for(int k=1;k<=n;k++)
+   for(int i=1;i<=n;i++)
+    for(int j=1;j<=n;j++)
+     ans.a[i][j]=min(ans.a[i][j],a[i][k]+b.a[k][j]);
+  return ans;
+ }
+}a;
+long long f[105][105];
+mat fpow(mat x,int y)
+{
+ mat ans;
+ for(int i=1;i<=n;i++)
+  for(int j=1;j<=n;j++)
+   ans.a[i][j]=f[i][j];
+ while(y)
+ {
+  if(y&1)ans=ans*x;
+  x=x*x;
+  y>>=1;
+ }
+ return ans;
+}
+int main()
+{
+ memset(f,63,sizeof(f));
+ cin>>n>>m>>k;
+ for(int i=1;i<=n;i++)
+  f[i][i]=0;
+ for(int i=1;i<=m;i++)
+ {
+  cin>>e[i].u>>e[i].v>>e[i].w;
+  f[e[i].u][e[i].v]=e[i].w;
+ }
+ for(int k=1;k<=n;k++)
+  for(int i=1;i<=n;i++)
+   for(int j=1;j<=n;j++)
+    f[i][j]=min(f[i][j],f[i][k]+f[k][j]);
+ for(int k=1;k<=m;k++)
+ {
+  int u=e[k].u,v=e[k].v,w=e[k].w;
+  for(int i=1;i<=n;i++)
+   for(int j=1;j<=n;j++)
+    a.a[i][j]=min(a.a[i][j],min(f[i][j],f[i][u]+f[v][j]-w));
+ }
+ if(k==0)cout<<f[1][n]<<endl;
+ else cout<<fpow(a,k).a[1][n]<<endl;
+ return 0;
+}
 ```
 
