@@ -7,7 +7,8 @@
 lower_bound 和upper_bound需要用在一个有序数组和容器中。
 
 - lower_bound (first,last,val)用来寻找在数组和容器[first,last)的范围内，第一个值**大于等于**val的元素的位置。如果是数组，则返回该位置的指针，如果是容器，则返回该位置的迭代器。
-- upper_bound(first,last,val)用来寻找在数组和容器[first,last)的范围内，第一个值**大于**val的元素的位置。如果是数组，则返回该位置的指针，如果是容器，则返回该位置的迭代器。
+- upper_bound(first,last,val)用来寻找在数组和容器[first,last)的范围内，第一个值**大于**val的元素的位置。如果是数组，则返回该位置的指针，如果是容器，则返回该位置的迭代器。
+
 - 演示代码
 
 ```c++
