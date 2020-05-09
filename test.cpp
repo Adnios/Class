@@ -1,69 +1,49 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <cstdio>
+#define mod 100007
 using namespace std;
-struct edge{
-	int u,v,w;
-}e[2505];
-long long n,m,k,f[105][105]; 
-struct mat{
-	long long a[105][105];
-	mat(int x=63){//¹¹Ôìº¯Êý 
-		memset(a,x,sizeof(a));
-	}
-	mat operator*(const mat& b)const{
-		mat ans;//ans=a*b
-		for(int k=1;k<=n;k++){
-			for(int i=1;i<=n;i++){
-				for(int j=1;j<=n;j++){
-					ans.a[i][j]=min(ans.a[i][j],a[i][k]+b.a[k][j]);
-				} 
-			}
-		}
-		return ans;
-	}
-}a;
-mat fpow(mat x,int y){
-	mat ans;
-	for(int i=1;i<=n;i++){
-		for(int j=1;j<=n;j++){
-			ans.a[i][j]=f[i][j];//k=0
-		}
-	}
-	while(y>0){
-		if(y&1)
-			ans=ans*x;
-		x=x*x;
-		y>>=1;
-	}
-	return ans;
+
+vector<int> Hash[100007];
+long long maxx, t, n, num;
+
+int read(){
+    int w=1,q=0;
+	char ch=' ';
+    while(ch!='-'&&(ch<'0'||ch>'9'))ch=getchar();
+    if(ch=='-')w=-1,ch=getchar();
+    while(ch>='0'&&ch<='9')q=q*10+ch-'0',ch=getchar();
+    return w*q;
 }
 
-int main(){
-	memset(f,63,sizeof(f));
-	cin>>n>>m>>k;
-	for(int i=1;i<=n;i++)
-		f[i][i]=0;
-	for(int i=1;i<=m;i++){
-		cin>>e[i].u>>e[i].v>>e[i].w;
-		f[e[i].u][e[i].v]=e[i].w;
-	}
-	for(int k=1;k<=n;k++){
-		for(int i=1;i<=n;i++){
-			for(int j=1;j<=n;j++){
-				f[i][j]=min(f[i][j],f[i][k]+f[k][j]);
-			}
-		}
-	}
-	for(int k=1;k<=m;k++){
-		int u=e[k].u,v=e[k].v,w=e[k].w;
-		for(int i=1;i<=n;i++){
-			for(int j=1;j<=n;j++){
-				a.a[i][j]=min(a.a[i][j],min(f[i][j],f[i][u]+f[v][j]-w));
-			}
-		}
-	}
-	if(k==0)
-		cout<<f[1][n]<<endl;
-	else
-		cout<<fpow(a,k).a[1][n]<<endl; 
+int max(int x, int y) {
+    return (x > y) ? x : y;
 }
 
+bool check(int val) {
+    int pos = (val % mod + mod) % mod;
+    maxx = max(maxx, pos);
+    for (int k = 0; k < Hash[pos].size(); k++) {
+        if (Hash[pos][k] == val) {
+            return true;
+        }
+    }
+    Hash[pos].push_back(val);
+    return false;
+}
+
+int main() {
+    t=read();
+    while (t--) {
+        n=read();
+        for (int i = 0; i <= maxx; i++) Hash[i].clear();
+        maxx = 0;
+        for (int i = 1; i <= n; i++) {
+            num=read();
+            if(!check(num))
+                printf("%lld ",num);
+        }
+        cout << "\n";
+    }
+    return 0;
+}
