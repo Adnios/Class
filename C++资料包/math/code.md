@@ -392,6 +392,7 @@ int main(){
 
 ```
 # P1048 采药
+
 裸的背包
 ```cpp
 #include <iostream>
