@@ -1,5 +1,5 @@
 # find()
-
+1. fajd
 ```c++
 #include <bits/stdc++.h>
 using namespace std;
@@ -116,7 +116,7 @@ int main(){
 ```c++
 #include <bits/stdc++.h>
 using namespace std;
-int expandAroundCenter(string s, int left, int right) {
+int find(string s, int left, int right) {
     int L = left, R = right;
     while (L >= 0 && R < s.length() && s[L] == s[R]) {
         L--;
@@ -124,12 +124,12 @@ int expandAroundCenter(string s, int left, int right) {
     }
     return R - L - 1;
 }
-string longestPalindrome(string s) {
+string longString(string s) {
     if (s.length() < 1) return "";
     int start = 0, end = 0;
     for (int i = 0; i < s.length(); i++) {
-        int len1 = expandAroundCenter(s, i, i); //从一个字符扩展
-        int len2 = expandAroundCenter(s, i, i + 1); //从两个字符之间扩展
+        int len1 = find(s, i, i); //从一个字符扩展
+        int len2 = find(s, i, i + 1); //从两个字符之间扩展
         int len = max(len1, len2);
         //根据 i 和 len 求得字符串的相应下标
         if (len > end - start) {
@@ -143,7 +143,7 @@ string longestPalindrome(string s) {
 int main(){
     string s;
     cin>>s;
-    cout<<longestPalindrome(s).size();
+    cout<<longString(s).size();
 }
 ```
 
@@ -159,7 +159,7 @@ void manacher()
     for(int i=1;i<n;i++)
     {
         if(i<maxright)
-            hw[i]=min(hw[(mid<<1)-i],hw[mid]+mid-i);
+            hw[i]=min(hw[(mid<<1)-i],maxright-i);
         else
             hw[i]=1;
         for(;s[i+hw[i]]==s[i-hw[i]];++hw[i]);
