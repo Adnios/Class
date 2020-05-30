@@ -2,38 +2,32 @@
 #include <iostream>
 #define maxn 600
 using namespace std;
-int line[maxn][maxn],used[maxn],nxt[maxn];
-int e,n,m;
-bool Find(int x){
-    for(int i=1;i<=m;i++){
-        if(line[x][i]==1&&!used[i]){
-            used[i]=1;
-            if(nxt[i]==0||Find(nxt[i])){
-                nxt[i]=x;
-                return true;
-            }
-        }
-    }
-    return false;
-}
-int match(){
-    int sum=0;
-    for(int i=1;i<=n;i++){
-        memset(used,0,sizeof(used));
-        if(Find(i)){
-            sum++;
-        }
-    }
-    return sum;
-}
+string x,y;
+char a[100],b[100];
 int main(){
-    cin>>n>>m>>e;
-    memset(nxt,0,sizeof(nxt));
-    memset(line,0,sizeof(line));
-    while(e--){
-        int u,v;
-        cin>>u>>v;
-        line[u][v]=1;
-    }
-    cout<<match();
+	memset(a,'?',sizeof(a));
+	memset(b,'?',sizeof(b));
+	cin>>x>>y;
+	int len=x.length(),cnt=0;
+	for(int i=0;i<len;i++){
+		if(a[x[i]]=='?'&&b[y[i]]=='?'){
+			a[x[i]]=y[i];
+			b[y[i]]=x[i];
+			cnt++;
+		}
+		else if(a[x[i]]!=y[i]){
+			cout<<"Failed";
+			return 0;
+		}
+	}
+	if(cnt<26){
+		cout<<"Failed";
+		return 0;
+	} 
+	string t;
+	cin>>t;
+	for(int i=0;i<t.length();i++){
+		cout<<a[t[i]];
+	}
+	return 0;
 }

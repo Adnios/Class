@@ -1,5 +1,5 @@
 # find()
-1. fajd
+
 ```c++
 #include <bits/stdc++.h>
 using namespace std;
