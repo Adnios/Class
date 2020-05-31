@@ -433,27 +433,27 @@ int main(){
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
-const int dong_bao_cheng=1100,dongbaocheng=110;
-int dong;
-int bao;
-int cheng[dongbaocheng],ch[dongbaocheng];
-int cheng2[dong_bao_cheng][dongbaocheng];
+const int maxn=1100,maxm=110;
+int t;
+int m;
+int v[maxm],c[maxm];
+int dp[maxn][maxm];
 int main()
 {
-    scanf("%d %d",&dong,&bao);
-    for(int i=1;i<=bao;++i)
-        scanf("%d %d",&cheng[i],&ch[i]);
-    for(int i=1;i<=bao;++i)
+    scanf("%d %d",&t,&m);
+    for(int i=1;i<=m;++i)
+        scanf("%d %d",&v[i],&c[i]);
+    for(int i=1;i<=m;++i)
     {
-        for(int v=dong;v>=0;--v)
+        for(int j=t;j>=0;--j)
         {
-            if(cheng[i]<=v)
-                cheng2[i][v]=max(cheng2[i-1][v],cheng2[i-1][v-cheng[i]]+ch[i]);
+            if(v[i]<=j)
+                dp[i][j]=max(dp[i-1][j],dp[i-1][j-v[i]]+c[i]);
             else
-                cheng2[i][v]=cheng2[i-1][v];
+                dp[i][j]=dp[i-1][j];
         }
     }
-    printf("%d\n",cheng2[bao][dong]);
+    printf("%d\n",dp[m][t]);
     return 0;
 }
 ```
