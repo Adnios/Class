@@ -66,7 +66,7 @@ int main(){
     int x;
     cin>>x;
     cout<<((x&0x0000ffff)<<16|(x&0xffff0000)>>16)<<endl;
-}
+
 
 ```
 
@@ -431,32 +431,12 @@ int main(){
 ```
 
 ```cpp
-#include<bits/stdc++.h>
-using namespace std;
-const int maxn=1100,maxm=110;
-int t;
-int m;
-int v[maxm],c[maxm];
-int dp[maxn][maxm];
-int main()
-{
-    scanf("%d %d",&t,&m);
-    for(int i=1;i<=m;++i)
-        scanf("%d %d",&v[i],&c[i]);
-    for(int i=1;i<=m;++i)
-    {
-        for(int j=t;j>=0;--j)
-        {
-            if(v[i]<=j)
-                dp[i][j]=max(dp[i-1][j],dp[i-1][j-v[i]]+c[i]);
-            else
-                dp[i][j]=dp[i-1][j];
-        }
-    }
-    printf("%d\n",dp[m][t]);
-    return 0;
-}
 ```
+| factors | aaaaaaa | b |
+|---------|---------|---|
+| f1      | Y       | N |
+| f2      | Y       | N |
+
 
 # P1060 开心的金明
 
